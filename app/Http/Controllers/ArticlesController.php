@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use App\Comment;
+use Auth;
 use Session;
 
 class ArticlesController extends Controller
@@ -24,8 +26,6 @@ class ArticlesController extends Controller
     }
 
     function saveArticle(Request $request) {
-    	echo ($request->title . " " . $request->content);
-
     	$new_article = new Article(); 
     	$new_article->title = $request->title;
     	$new_article->content = $request->content; 
@@ -57,5 +57,15 @@ class ArticlesController extends Controller
 
 		Session::flash('message','Article Successfully Edited');
 		return redirect('articles');
+	}
+
+	function addComment($id, Request $request) {
+		$new_comment = new Comment();
+		$new_comment->content = $request->comment;
+		$new_comment->user_id = Auth::user()->id;
+		$new_comment->article_id = $id;
+		$new_comment->save();
+
+		return redirect("articles/$id");
 	}
 }

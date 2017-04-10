@@ -40,3 +40,9 @@ Route::get('/articles/{id}/delete', 'ArticlesController@deleteArticle');
 Route::get('/articles/{id}/edit', 'ArticlesController@editArticle');
 
 Route::post('/articles/{id}/edit', 'ArticlesController@saveEditArticle');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::post('/articles/{id}/comment', 'ArticlesController@addComment');
